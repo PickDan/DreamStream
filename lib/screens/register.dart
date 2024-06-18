@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:taller1/main.dart';
+import 'package:taller1/screens/login.dart';
 
 void main(){
   runApp(Register());
@@ -43,39 +45,60 @@ Widget Body(context){
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Nombre de usuario',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 20),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Correo electrónico',
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            SizedBox(height: 20),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Contraseña',
-                border: OutlineInputBorder(),
-              ),
-              obscureText: true,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-              },
-              child: Text('Registrarse'),
-            ),
-            SizedBox(height: 20),
+            Email(context),
+            Password(context),
+            btnRegister(context),
             ReturnHome(context),
           ],
         )
     )
+  );
+}
+
+final TextEditingController _email = TextEditingController();
+Widget Email(context) {
+  return TextField(
+    controller: _email,
+    decoration: InputDecoration(
+      labelText: 'Correo electrónico',
+      border: OutlineInputBorder(),
+    ),
+    keyboardType: TextInputType.emailAddress,
+  );
+}
+
+final TextEditingController _password = TextEditingController();
+Widget Password(context) {
+  return Column(
+    children: [
+      SizedBox(height: 20),
+      TextField(
+        controller: _password,
+        decoration: InputDecoration(
+          labelText: 'Contraseña',
+          border: OutlineInputBorder(),
+        ),
+        obscureText: true,
+      ),
+    ],
+  );
+}
+
+Widget btnRegister(context) {
+  return ElevatedButton(
+    onPressed: () async {
+       register(context);
+    },
+    style: ElevatedButton.styleFrom(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+    ),
+    child: const Text(
+      "Registrarse",
+      style: TextStyle(fontSize: 16),
+    ),
   );
 }
 
@@ -93,4 +116,25 @@ void goHome(context){
       (context) => const Taller01()
     )
   );
+}
+
+Future<void> register(context) async {
+  try {
+  final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    email: _email.text,
+    password: _password.text,
+  );
+      Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Login()),
+    );
+} on FirebaseAuthException catch (e) {
+  if (e.code == 'weak-password') {
+    print('The password provided is too weak.');
+  } else if (e.code == 'email-already-in-use') {
+    print('The account already exists for that email.');
+  }
+} catch (e) {
+  print(e);
+}
 }

@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:taller1/main.dart';
 import 'package:taller1/screens/movies.dart';
 
-void main() {
+Future<void> main() async {
   runApp(Login());
 }
 
@@ -81,7 +82,7 @@ Widget Email(context) {
 
 final TextEditingController _password = TextEditingController();
 Widget Password(context) {
-    return Column(
+  return Column(
     children: [
       SizedBox(height: 20),
       TextField(
@@ -96,32 +97,30 @@ Widget Password(context) {
   );
 }
 
-Widget BtnLogin(context){
-  return(
-    FilledButton(onPressed: (){
-      login(context);
-    }, child: Text("Iniciar sesión"))
-  );
+Widget BtnLogin(context) {
+  return (FilledButton(
+      onPressed: () {
+        login(context);
+      },
+      child: Text("Iniciar sesión")));
 }
 
 Future<void> login(context) async {
   try {
-    final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: _email.text,
-      password: _password.text,
-    );
-    Navigator.push(context, 
-      MaterialPageRoute(builder: 
-      (context) => Movies()
-      )
-    );
+    final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _email.text, password: _password.text);
+
+       Navigator.push(context, 
+        MaterialPageRoute(builder: 
+          (context) => Movies()
+        )
+      );
+
   } on FirebaseAuthException catch (e) {
-    if (e.code == 'weak-password') {
-      print('The password provided is too weak.');
-    } else if (e.code == 'email-already-in-use') {
-      print('The account already exists for that email.');
+    if (e.code == 'user-not-found') {
+      print('No user found for that email.');
+    } else if (e.code == 'wrong-password') {
+      print('Wrong password provided for that user.');
     }
-  } catch (e) {
-    print(e);
   }
 }
