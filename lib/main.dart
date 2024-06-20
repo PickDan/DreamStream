@@ -6,7 +6,7 @@ import 'package:taller1/screens/register.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(); //breakpoint
   runApp(Taller01());
 }
 
@@ -15,7 +15,7 @@ class Taller01 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Bienvenida',
       home: Home(),
     );
@@ -98,7 +98,7 @@ Widget MoviesList(BuildContext context){
     ElevatedButton(onPressed: (){
       Navigator.push(context, 
         MaterialPageRoute(builder: 
-          (context) =>const Movies()
+          (context) => const Movies()
         )
       );
     }, child:  const Text("Catálogo de películas"))
