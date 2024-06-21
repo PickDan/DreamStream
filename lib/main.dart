@@ -42,58 +42,58 @@ class _HomeState extends State<Home> {
 }
 
 Widget Body(context) {
-  return (Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          'Plataforma para disfrutar tu streaming',
-          style: TextStyle(fontSize: 24),
-          textAlign: TextAlign.center,
-        ),
-        SizedBox(height: 20),
-        Text(
-          'Disfruta de las mejores series y películas cuando y donde quieras!',
-          style: TextStyle(fontSize: 16),
-          textAlign: TextAlign.center,
-        ),
-        SizedBox(height: 20),
-        LoginBottom(context),
-        SizedBox(height: 20),
-        RegisterBottom(context),
-        SizedBox(height: 20),
-        MoviesList(context)
-
-      ],
-    ),
+  return (Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[
+      Text(
+        'Plataforma para disfrutar tu streaming',
+        style: TextStyle(fontSize: 24),
+        textAlign: TextAlign.center,
+      ),
+      //SizedBox(height: 20),
+      Text(
+        'Disfruta de las mejores series y películas cuando y donde quieras!',
+        style: TextStyle(fontSize: 16),
+        textAlign: TextAlign.center,
+      ),
+      //SizedBox(height: 20),
+      LoginBottom(context),
+      SizedBox(height: 20),
+      RegisterBottom(context),
+      SizedBox(height: 20),
+      MoviesList(context)
+  
+    ],
   ));
 }
 
-Widget LoginBottom(BuildContext context) {
+Widget LoginBottom(context) {
   return (
     ElevatedButton(onPressed: (){
+      print("aaaaaaaaaaaaaaaa");
       Navigator.push(context, 
         MaterialPageRoute(builder: 
-          (context) =>const Login()
+          (context) => Login()
         )
       );
     }, child:  const Text("Iniciar sesión"))
   );
 }
 
-Widget RegisterBottom(BuildContext context){
+Widget RegisterBottom(context){
   return(
-   ElevatedButton(onPressed: (){
+   TextButton(onPressed: (){
+    print("HKLDAHSDASL");
       Navigator.push(context, 
         MaterialPageRoute(builder: 
-          (context) =>const Register()
+          (context) => Register()
         )
       );
-    }, child:  const Text("Registrarse"))
+    }, child:  const Text("Registrarse aquí"))
   );
 }
 
-Widget MoviesList(BuildContext context){
+Widget MoviesList(context){
    return (
     ElevatedButton(onPressed: (){
       Navigator.push(context, 

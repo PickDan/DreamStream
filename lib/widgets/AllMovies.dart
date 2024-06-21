@@ -46,10 +46,10 @@ class Allmovies extends StatelessWidget {
                     height: 100,
                     width: 300,
                     fit: BoxFit.cover,
-                  ),
-                  
+                  ), 
                 ),
               ),
+              btnVerBadBoys(context),
                Padding(
                 padding: EdgeInsets.only(left: 10),
                 child: ClipRRect(
@@ -62,6 +62,7 @@ class Allmovies extends StatelessWidget {
                   ),
                 ),
               ),
+              btnVerPadrino(context),
             ],
           ),
         ),

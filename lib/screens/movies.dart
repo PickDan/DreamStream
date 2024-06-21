@@ -26,9 +26,7 @@ class _MoviesState extends State<Movies> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(scaffoldBackgroundColor: Color(0xFF0F111D)),
-      routes: {
-        "/": (context) => HomePage(),
-      },
+      home: HomePage(),
     );
   }
 }
